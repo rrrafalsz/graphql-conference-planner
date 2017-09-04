@@ -12,6 +12,8 @@ import {AuthenticationModule} from './authentication/authentication.module';
 import {ManagementModule} from './management/management.module';
 import {AppHeaderComponent} from 'app/app-header.component';
 import {AppContainerComponent} from 'app/app-container.component';
+import {provideClients} from "./apollo.config";
+import {ApolloModule} from "apollo-angular";
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import {AppContainerComponent} from 'app/app-container.component';
     TalkModule,
     SpeakerModule,
     AuthenticationModule,
-    ManagementModule
+    ManagementModule,
+    ApolloModule.forRoot(provideClients)
   ],
   providers: [],
   bootstrap: [AppComponent]
