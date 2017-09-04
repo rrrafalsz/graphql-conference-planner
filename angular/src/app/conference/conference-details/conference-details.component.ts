@@ -8,6 +8,8 @@ import {chunk, unsubscribeAll} from '../../utils';
 import {Talk} from 'app/talk/types';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/empty';
+import {DetailedConferenceQuery, DetailedConferenceQueryResponse} from "../conference.apollo-query";
+import {Apollo} from "apollo-angular/build/src";
 
 @Component({
   selector: 'cp-conference-details',
@@ -20,7 +22,7 @@ export class ConferenceDetailsComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private apollo: Apollo, private route: ActivatedRoute) {
     this.getConferenceDetails = this.getConferenceDetails.bind(this);
   }
 
@@ -28,7 +30,8 @@ export class ConferenceDetailsComponent implements OnInit, OnDestroy {
     const conferenceDetails$ = this.route.paramMap
       .map((params: ParamMap) => params.get('id'))
       .switchMap(this.getConferenceDetails)
-      .subscribe(() => {
+      .subscribe(({data}) => {
+        this.conference = this.formatConference(data.conference)
         // Apollo give you back a Conference type
         // you have to convert it to the ConferenceDetails type
         // using the method 'formatConference'
@@ -38,8 +41,12 @@ export class ConferenceDetailsComponent implements OnInit, OnDestroy {
   }
 
   getConferenceDetails(conferenceId: String) {
-    // TODO: Write DetailedConferenceQuery and execute it
-    return Observable.empty();
+    return this.apollo.watchQuery<DetailedConferenceQueryResponse>({
+      query: DetailedConferenceQuery,
+      variables: {
+        conferenceId
+      }
+    });
   }
 
   formatConference(data: Conference): ConferenceDetails {

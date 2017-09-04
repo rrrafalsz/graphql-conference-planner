@@ -22,7 +22,6 @@ export class ConferenceCardListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // TODO: Write AllConferencesQuery in conference.apollo-query.ts and execute it
     this.apollo.watchQuery<AllConferencesQueryResponse>({
       query: AllConferencesQuery
     }).subscribe(({data}) => {
