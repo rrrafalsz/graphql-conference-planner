@@ -1,3 +1,11 @@
+# Free ticket for React Day Berlin
+Win a free ticket for React Day Berlin on 2 December.
+Just login here: 
+https://goo.gl/CHYVdt
+with pin code 8357
+
+Winner will be announced at the end of the HackJam 
+
 # graphql-conference-planner
 graphql-conference-planner using React, Angular, VueJS
 
